@@ -1,0 +1,53 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Participantegrupo
+ *
+ * @ORM\Table(name="ParticipanteGrupo", indexes={@ORM\Index(name="idGrupo", columns={"idGrupo"})})
+ * @ORM\Entity
+ */
+class Participantegrupo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=true)
+     */
+    private $data;
+
+    /**
+     * @var \AppBundle\Entity\Participante
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Participante")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idParticipante", referencedColumnName="idPessoa")
+     * })
+     */
+    private $idparticipante;
+
+    /**
+     * @var \AppBundle\Entity\Grupo
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idGrupo", referencedColumnName="id")
+     * })
+     */
+    private $idgrupo;
+
+
+}
+

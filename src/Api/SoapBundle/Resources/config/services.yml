@@ -1,0 +1,4 @@
+# Acme/ApiBundle/Ressources/services.yml
+services:
+     check_service:
+         class: Api\SoapBundle\Services\CheckService

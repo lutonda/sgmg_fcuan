@@ -1,0 +1,180 @@
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function (e) {
+            $('.profile-usermenu .nav a').click(function (e) {
+                e.preventDefault();
+                snRequest($(this).attr('value'));
+            })
+            function snRequest($type) {
+                $('.profile-content').html('<div class="Mnloader col-md-12" style="min-height: 500px; text-align: center"><img class="col-md-2 col-md-offset-5" src="{{ asset('img/Loader.gif') }}"></div>');
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: 'api/'+$type+'/{{ membro.id }}',
+                    data: null,
+                    success: function (template) {
+                        if (template.status == 0) {
+
+                            $('.profile-content').html(template.message); //Change the html of the div with the id = "your_div"
+
+
+                        }
+                        if (template.status == 1) {
+                            swal({
+                                title: 'Parabens!',
+                                text: "A actualização da Categoria foi feita com sucesso",
+                                type: 'success',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ok, Continuar!',
+                                confirmButtonClass: 'btn btn-success',
+                                buttonsStyling: false
+                            }, function (dismiss) {
+                                // dismiss can be 'cancel', 'overlay',
+                                // 'close', and 'timer'
+                                if (dismiss == true) {
+                                    location.reload();
+                                }
+
+                            })
+                        }
+                        if (template.status == 2) {
+                            swal({
+                                title: 'Parabens!',
+                                text: "A Categoria inserida com sucesso",
+                                type: 'success',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ok, Continuar!',
+                                confirmButtonClass: 'btn btn-success',
+                                buttonsStyling: false
+                            }, function (dismiss) {
+                                // dismiss can be 'cancel', 'overlay',
+                                // 'close', and 'timer'
+                                if (dismiss == true) {
+                                    location.reload();
+                                }
+
+                            })
+                        }
+                    },
+                    error: function (e) {
+                        alert(typeof e);
+                        $('.profile-content').html(e.message)
+
+                    }
+
+                });
+            }
+
+            $('.eliminar').click(function (e) {
+                var item=$(this).attr('d')
+                var tipo=$(this).attr('title')
+                var id=$(this).attr('value')
+                swal({
+                    title: 'Atenção!',
+                    text: "esta operação ira elimnar definitivamente a "+tipo+" " + item + ". se Tiver dependentes, estes etarão sem dependecia",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, Eliminar!',
+                    cancelButtonText: 'Não, Desisto!',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }, function (dismiss) {
+                    // dismiss can be 'cancel', 'overlay',
+                    // 'close', and 'timer'
+
+                    if (dismiss == true) {
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'json',
+                            url: '/'+tipo+'/delete/' + id,
+                            data: null,
+                            success: function (template) {
+                                swal({
+                                    title: 'Ok!',
+                                    text: "A "+tipo+" " + item + " foi Eliminado com Sucesso",
+                                    type: 'success'
+                                }, function(dismiss){
+                                    if(dismiss==true){
+                                        location.reload()
+                                    }
+                                })
+                            }
+
+
+                        })
+                    }
+                    else {
+                        swal({
+                            title: 'Cancelado!',
+                            text: "A "+tipo+" não " + item + " foi Eliminado",
+                            type: 'error'
+                        }).then()
+                    }
+                })
+            })
+
+
+        })
+    </script>
+{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PROFILE SIDEBAR -->
+        <div class="profile-sidebar">
+            <!-- PORTLET MAIN -->
+            <div class="portlet light profile-sidebar-portlet bordered" style="min-height: 550px">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <img src="{{ asset('pages/media/profile/profile_user.jpg') }}" class="img-responsive" alt=""> </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name"> {{ membro.nome  }} </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <div class="profile-userbuttons">
+                    <button type="button" class="btn btn-circle green btn-sm">{{ membro.tipo }}</button>
+                    <button type="button" class="btn btn-circle red btn-sm">Message</button>
+                </div>
+                <!-- END SIDEBAR BUTTONS -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="javascript:;" value="actividade">
+                                <i class="icon-home"></i> Actividades </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"  class="xi" value="detalhesconta">
+                                <i class="icon-settings"></i> Detalhes de Conta </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-5 bordered">
+                    Grupos
+                    <div class="widget-thumb-wrap">
+                        <i class="widget-thumb-icon bg-blue icon-bar-chart"></i>
+                        <i class="widget-thumb-icon bg-yellow icon-bubbles"></i>
+                        <i class="widget-thumb-icon bg-green icon-calculator"></i>
+                    </div>
+                </div>
+                <!-- END MENU -->
+            </div>
+            <!-- END PORTLET MAIN -->
+        </div>
+        <!-- END BEGIN PROFILE SIDEBAR -->
+        <!-- BEGIN PROFILE CONTENT -->
+        <div class="profile-content">
+            {%  include api %}
+        </div>
+        <!-- END PROFILE CONTENT -->
+    </div>
+</div>
+<!-- END PAGE BASE CONTENT -->

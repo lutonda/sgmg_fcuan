@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MAC\Taxonomia" table="Taxonomia">
+    <indexes>
+      <index name="idFilo" columns="idFilo"/>
+      <index name="idReino" columns="idReino"/>
+      <index name="idClasse" columns="idClasse"/>
+      <index name="idSubclasse" columns="idSubclasse"/>
+      <index name="idOrdem" columns="idOrdem"/>
+      <index name="idSubordem" columns="idSubordem"/>
+      <index name="idFamilia" columns="idFamilia"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="idfilo" target-entity="Filo" fetch="LAZY">
+      <join-columns>
+        <join-column name="idFilo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idreino" target-entity="Reino" fetch="LAZY">
+      <join-columns>
+        <join-column name="idReino" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idclasse" target-entity="Classe" fetch="LAZY">
+      <join-columns>
+        <join-column name="idClasse" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idsubclasse" target-entity="Subclasse" fetch="LAZY">
+      <join-columns>
+        <join-column name="idSubclasse" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idordem" target-entity="Ordem" fetch="LAZY">
+      <join-columns>
+        <join-column name="idOrdem" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idsubordem" target-entity="Subordem" fetch="LAZY">
+      <join-columns>
+        <join-column name="idSubordem" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idfamilia" target-entity="Familia" fetch="LAZY">
+      <join-columns>
+        <join-column name="idFamilia" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

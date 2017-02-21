@@ -1,0 +1,236 @@
+{% block css %}
+    <link href="{{ asset('global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet"
+          type="text/css">
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.date-picker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            })
+            $('#espandirForm').click(function (e) {
+                $('div.mais').removeClass('hidden');
+                $(this).addClass('hidden');
+                $('#reduzirForm').removeClass('hidden');
+            })
+            $('#reduzirForm').click(function () {
+                $('div.mais').addClass('hidden');
+                $(this).addClass('hidden');
+                $('#espandirForm').removeClass('hidden');
+            })
+            $('#contactosMembro').repeater({
+                btnAddClass: 'r-btnAdd',
+                btnRemoveClass: 'r-btnRemove',
+                groupClass: 'r-group',
+                minItems: 0,
+                maxItems: 0,
+                startingIndex: 0,
+                reindexOnDelete: true,
+                repeatMode: 'append',
+                animation: null,
+                animationSpeed: 400,
+                animationEasing: 'swing',
+                clearValues: true
+            });
+            $('#moradax').magicSuggest({
+                data: [
+                    {% for mr in morada %}
+                    "{{ mr.nome }}",
+                    {% endfor %}
+                ],
+                resultAsString: true,
+                allowFreeEntries: false,
+                name: "habitoMineiro"
+            });
+        })
+    </script>
+{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-user font-dark"></i>
+                    <span class="caption-subject bold uppercase"> MEMBROS</span>
+                </div>
+                <div class="actions">
+
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form role="form" class="cadastrarMembro">
+                    <div class="form-body">
+                        <div class="form-group col-md-12">
+                            <label>Nome Copleto</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-user"></i>
+                                <input type="text" name="nomecompleto" class="form-control input-lg"
+                                       placeholder="nome completo"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Tipo</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-plug"></i>
+                                <select name="tipo" class="form-control input-lg" style="border-radius: 0 !important;">
+                                    {% set i=0 %}
+                                    {% for tipo in tipos %}
+                                        <option value="{{ i }}">{{ tipo }}</option>
+                                    {% set i=i+1 %}
+                                    {% endfor %}
+                                </select></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Genero</label>
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio">
+                                    <input type="radio" name="genero" id="optionsRadios4" value="0"
+                                           checked=""> Masculino
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="genero" id="optionsRadios5" value="1">
+                                    Femenino
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>E-mail</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-envelope-o"></i>
+                                <input type="text" name="contacto[0]" class="form-control input-lg" placeholder="E-mail">
+                                <input type="text" name="tipocontacto[0]" class="hidden" value="4">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Username</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-user-plus"></i>
+                                <input type="text" name="username" class="form-control input-lg"
+                                       placeholder="username"></div>
+                        </div>
+                    </div>
+                    <div class="form-body mais hidden">
+                        <div class="row"></div>
+                        <div class="form-group col-md-6">
+                            <label>Nivel Academico</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-plug"></i>
+                                <select name="nivelacademico" class="form-control input-lg"
+                                        style="border-radius: 0 !important;">
+                                    {% set i=0 %}
+                                    {% for nivel in nivelacademico %}
+                                        <option value="{{ i }}">{{ nivel }}</option>
+                                        {% set i=i+1 %}
+                                    {% endfor %}
+                                </select></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Especialidades</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-plug"></i>
+                                <select name="especialidade" class="form-control input-lg"
+                                        style="border-radius: 0 !important;">
+                                    {% for especialidade in especialidades %}
+                                        <option value="{{ especialidade.id }}">{{ especialidade.nome }}</option>
+                                    {% endfor %}
+
+                                </select></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Data de Nascimento</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-calendar-o"></i>
+                                <input name="datadenascimento" type="text" class="form-control input-lg date-picker"
+                                       placeholder="Data de Nascimento" autocomplete="no">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Morada</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-map-o"></i>
+                                <select name="morada"
+                                        class="form-control input-lg"
+                                        style="border-radius: 0 !important;">
+                                    <option disabled selected="selected">Escolha uma morada</option>
+                                    {% for el in morada %}
+                                        <option value="{{ el.id }}">{{ el.nome |capitalize }}, {{ el.idprovincia.nome |capitalize }}, {{ el.idprovincia.idpais.nome |capitalize }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Naturalidade</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-map-marker"></i>
+                                <select name="naturalidade"
+                                        class="form-control input-lg"
+                                        style="border-radius: 0 !important;">
+                                    <option disabled selected="selected">Escolha uma Naturalidade</option>
+                                    {% for el in morada %}
+                                        <option value="{{ el.id }}">{{ el.nome |capitalize }}, {{ el.idprovincia.nome |capitalize }}, {{ el.idprovincia.idpais.nome |capitalize }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 grey" id="contactosMembro" style="background: #f0f0f0">
+                            <!-- BEGIN Portlet PORTLET-->
+                            <div class="form-group">
+                                <label style="width: 45%">Contacto</label>
+                                <label style="width: 30%">Tipo</label></div>
+                            <div class="r-group form-group">
+                                <input type="text" name="contacto[1]" id="elemento-qtd_1"
+                                       data-pattern-name="contacto[++]" data-pattern-id="elemento-qtd_++"
+                                       class="form-control input-lg col-md-6" style="width: 45%"/>
+                                <select name="tipocontacto[1]" id="elemento-nome_1"
+                                        data-pattern-name="tipocontacto[++]" data-pattern-id="elemento-nome_++"
+                                        class="form-control input-lg col-md-6"
+                                        style="width: 40%;border-radius: 0 !important;">
+                                    {% for el in tipoContacto %}
+                                        <option value="{{ el.id }}">{{ el.nome }} </option>
+                                    {% endfor %}
+                                </select>
+                                <p>
+                                    <!-- Add a remove button for the item. If one didn't exist, it would be added to overall group -->
+                                    <button href="javascript:;" data-repeater-delete=""
+                                            class="r-btnRemove btn btn-danger mt-repeater-delete btn-lg">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </p>
+                            </div>
+                            <div class="actions">
+                                <button type="button" class="r-btnAdd btn default btn-sm"><i
+                                            class="fa fa-plus icon-black"></i> Adicionar
+                                </button>
+                            </div>
+                            .
+                            <!-- END GRID PORTLET-->
+                        </div>
+                        .
+                        <div class="form-group col-md-6" style="background: #f0f0f0">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-actions row">
+                            <button type="submit" class="btn blue">Submit</button>
+                            <a href="/membros"><button type="button" class="btn default">Cancel</button></a>
+                            <button id="espandirForm" class="btn btn-flickr left" type="button">
+                                <i class="fa fa-expand fa-fw"></i> Formulario Completo
+                            </button>
+                            <button id="reduzirForm" class="btn btn-flickr left hidden" type="button">
+                                <i class="fa fa-minus-circle fa-fw"></i> Formulario reduzido
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row"></div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>

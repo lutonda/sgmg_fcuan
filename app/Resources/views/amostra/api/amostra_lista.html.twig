@@ -1,0 +1,24 @@
+{% for amostra in amostras %}
+
+<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="portlet light portlet-fit bordered">
+
+        <div class="portlet-body amostra">
+            <div class="mt-element-overlay">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mt-overlay-3">
+                            <img src="{{ asset('global/img/acervos/mineiro/'~amostra.nome | lower ~'-1.jpg') }}">
+                            <div class="mt-overlay">
+                                <h2>{{ amostra.nome }}</h2>
+                                <a class="mt-info" href="#" value="{{ amostra.id }}" tipo="{{ tipo }}">Ver</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}

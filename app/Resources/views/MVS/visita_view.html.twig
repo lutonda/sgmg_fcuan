@@ -1,0 +1,283 @@
+{% block css %}
+    <style>
+        .text-left {
+            text-align: left
+        }</style>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+
+            $('#pessoa').magicSuggest({
+
+                data: [
+                    {% for pessoa in pessoas %}
+                    "{{ pessoa.nome }} - {{ pessoa.contactos.descricao }}",
+                    {% endfor %}
+                ],
+                resultAsString: true,
+                allowFreeEntries: false,
+                maxSelection: 1,
+                name: "guia"
+            });
+            $('.aprovar').click(function () {
+                $('div.bow').addClass('hidden');
+                $('div.setguia').removeClass('hidden');
+
+            })
+            $('.cancelar').click(function(){
+                $('div.bow').addClass('hidden');
+                $('div.getguia').removeClass('hidden');
+            })
+            $('.negar').click(function(){
+                alert(1)
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: "{{ path('visita_able') }}",
+                    data: {'guia':'x','data':{{ dados.id }}},
+                    success: function (template) {
+                        if (template.status == 1) {
+                            swal({
+                                title: 'Parabens!',
+                                text: "A visita negada com sucesso",
+                                type: 'success',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ok, Continuar!',
+                                confirmButtonClass: 'btn btn-success',
+                                buttonsStyling: false
+                            }, function (dismiss) {
+                                location.reload()
+                            })
+                        }
+                    },
+                    error: function (e) {
+                        $('html').prepend(e.responseText)
+                    }
+                });
+            })
+            $('form').submit(function(){
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: "{{ path('visita_able') }}",
+                        data: $(this).serialize(),
+                        success: function (template) {
+                            if (template.status == 1) {
+                                swal({
+                                    title: 'Parabens!',
+                                    text: "A visita aprovada com sucesso",
+                                    type: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Ok, Continuar!',
+                                    confirmButtonClass: 'btn btn-success',
+                                    buttonsStyling: false
+                                }, function (dismiss) {
+                                    location.reload()
+                                })
+                            }
+                        },
+                        error: function (e) {
+                            $('html').prepend(e.responseText)
+                        }
+                    });
+            })
+
+        })
+    </script>
+{% endblock %}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon- font-dark"></i>
+                    <span class="caption-subject bold uppercase"> Visitas</span>
+                </div>
+                <div class="actions">
+
+                </div>
+            </div>
+            <div class="portlet-body" style="min-height: 550px">
+                <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div class="portlet light portlet-fit bordered">
+                        <div class="portlet-body" style="min-height: 230px">
+                            <div class="mt-element-overlay">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mt-overlay-1">
+                                            <img src="{{ asset('/pages/img/avatars/team12.jpg') }}">
+                                            <div class="mt-overlay">
+                                                <ul class="mt-info">
+                                                    <li>
+                                                        <a class="btn default btn-outline"
+                                                           href="{{ path('pessoa_show',{'id':dados.idparticipante.id}) }}">
+                                                            <i class="icon-link"></i>Ver Perfil
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-6 col-sm-6 col-xs-12">
+                    <!-- BEGIN Portlet PORTLET-->
+                    <div class="portlet light portlet-fit bordered">
+                        <div class="portlet-body" style="min-height: 230px">
+                            <div class="row">
+                                <div class="col-md-4 right">Nome</div>
+                                <div class="btn btn-outline col-md-8 text-left">{{ dados.idparticipante.nome }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 right">Tipo</div>
+                                <div class="btn btn-outline col-md-8 text-left">{{ dados.tipo }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 right">Data da Visita</div>
+                                <div class="btn btn-outline col-md-8 text-left">{{ dados.datavisita }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 right">Duração</div>
+                                <div class="btn btn-outline col-md-8 text-left">{{ dados.duracao }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 right">Estado</div>
+                                <div class="btn btn-outline col-md-8 text-left">{{ dados.estado }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 right">Data de cadastro</div>
+                                <div class="btn btn-outline col-md-8 text-left">{{ dados.data }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div></div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="mt-element-ribbon bg-grey-steel" style="min-height: 220px">
+                        <div class="ribbon ribbon-round ribbon-border-dash-hor ribbon-color-default uppercase bold">
+                            Categoria de Interece
+                            <span class="badge badge-success">{{ dados.area|length }}</span></div>
+                        <div class="col-md-12"><br>
+                        <ul>
+                            {% for categoria in dados.area %}
+                                <li class="caption-subject font-back bold uppercase">{{ categoria.area.nome }} </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="mt-element-ribbon bg-grey-steel" style="min-height: 220px;">
+                        <div class="ribbon ribbon-round ribbon-border-dash-hor ribbon-color-default uppercase bold">
+                            Descrição
+                        </div>
+                    <div class="col-md-12 bordered">
+                        <br>
+                        <p>{{ dados.descricao }} .</p>
+                        <hr>
+                    </div>
+                    </div>
+                </div>
+                {% if dados.estado =='Excluido'  %}
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="mt-element-ribbon bg-grey-steel" style="min-height: 220px;">
+
+                        <div class="col-md-12 bordered">
+                            <br>
+                                <div class="form-group"><br>
+
+                                    <button class="btn btn-danger ">Cancelado</button>
+                                </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                {% elseif dados.tipo != 'Guiada' %}
+                    {% if dados.estado !='Activo'  %}
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="mt-element-ribbon bg-grey-steel" style="min-height: 220px;">
+
+                            <div class="col-md-12 bordered">
+                                <br>
+                                <form method="POST" action="javascript:;">
+                                    <div class="form-group"><br>
+
+                                        <input class="hidden" value="x" name="guia" hidden>
+                                        <input class="hidden" value="{{ dados.id }}" name="data" hidden>
+                                        <input class="hidden" hidden value="check" name="check">
+                                        <br>
+                                        <button type="submit"  class="btn btn-primary aprovar">Aprovar</button>
+                                        <button class="btn btn-danger negar">Negar</button>
+                                    </div>
+                                </form>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="mt-element-ribbon bg-grey-steel" style="min-height: 220px">
+                        <div class="ribbon ribbon-round ribbon-border-dash-hor ribbon-color-default uppercase bold">
+                            Guia da Visita
+                        </div>
+                        <br>
+
+                        {% if dados.guia is null %}
+                        <div class="bow setguia hidden col-md-12">
+                            <form method="POST" action="javascript:;">
+                                <div class="form-group"><br>
+                                    <label>Escolha o Guia pra esta visita</label>
+                                    <div class="input-icon input-icon-lg">
+                                        <input class="hidden" value="{{ dados.id }}" name="data" hidden>
+                                        <input class="hidden" hidden value="check" name="check">
+                                        <div id="pessoa" class="input-icon input-icon-lg" style="position: relative"></div>
+                                    </div><br><button type="submit" class="btn btn-primary aprovar">Salvar</button>
+                                    <button type="button" class="btn btn-default cancelar">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="bow getguia">
+                            <p class="ribbon-content">Visita Criada e aguardando Aprovação Superior<br>
+                                <button class="btn btn-primary aprovar">Aprovar</button>
+                                <button class="btn btn-danger negar">Negar</button>
+                            </p>
+                        </div>
+                        {% else %}
+                            <div class="bow isguia">
+                                <hr>
+                                <div class="mt-overlay-1">
+                                    <div class="col-md-4">
+                                        <img src="{{ asset('/pages/img/avatars/team12.jpg') }}" style="width: 100%">
+                                    </div>
+                                    <div class="col-md-6"><br>
+                                        <b class="caption-subject font-back bold uppercase">
+                                            {{ dados.guia.nome }}</b><br>
+                                        <a href="{{ path('pessoa_show',{'id':dados.guia.id}) }}" class="btn">
+                                                <i class="icon-link"></i>Ver Perfil
+                                                </a>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                            <hr>
+                        </div>
+                    </div>
+                    <!-- END Portlet PORTLET-->
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>

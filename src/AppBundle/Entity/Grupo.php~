@@ -1,0 +1,60 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Grupo
+ *
+ * @ORM\Table(name="Grupo", indexes={@ORM\Index(name="responsavel", columns={"responsavel"}), @ORM\Index(name="local", columns={"local"})})
+ * @ORM\Entity
+ */
+class Grupo
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=50, nullable=true)
+     */
+    private $nome;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tipo", type="integer", nullable=true)
+     */
+    private $tipo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Participante
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Participante")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="responsavel", referencedColumnName="idPessoa")
+     * })
+     */
+    private $responsavel;
+
+    /**
+     * @var \AppBundle\Entity\Municipio
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="local", referencedColumnName="id")
+     * })
+     */
+    private $local;
+
+
+}
+

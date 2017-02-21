@@ -1,0 +1,74 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Evento
+ *
+ * @ORM\Table(name="Evento", indexes={@ORM\Index(name="tipo", columns={"tipo"}), @ORM\Index(name="categoria", columns={"categoria"})})
+ * @ORM\Entity
+ */
+class Evento
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=50, nullable=true)
+     */
+    private $titulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=500, nullable=true)
+     */
+    private $descricao;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=false)
+     */
+    private $data = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Tipoevento
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tipoevento")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tipo", referencedColumnName="id")
+     * })
+     */
+    private $tipo;
+
+    /**
+     * @var \AppBundle\Entity\Categoriaevento
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Categoriaevento")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="categoria", referencedColumnName="id")
+     * })
+     */
+    private $categoria;
+
+
+}
+

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MAC\Mineiro" table="Mineiro">
+    <indexes>
+      <index name="idDureza" columns="idDureza"/>
+      <index name="idCategoria" columns="idCategoria"/>
+      <index name="idConservacao" columns="idConservacao"/>
+      <index name="idPrateleira" columns="idPrateleira"/>
+      <index name="idSistemaCristalina" columns="idSistemaCristalina"/>
+      <index name="idDensidade" columns="idDensidade"/>
+      <index name="idMedida" columns="idMedida"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nome" type="string" column="nome" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="peso" type="integer" column="peso" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="caraceristica" type="string" column="caraceristica" length="500" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="aplicacao" type="string" column="aplicacao" length="500" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="data" type="datetime" column="data" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="estado" type="integer" column="estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="iddureza" target-entity="Dureza" fetch="LAZY">
+      <join-columns>
+        <join-column name="idDureza" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idcategoria" target-entity="Categoria" fetch="LAZY">
+      <join-columns>
+        <join-column name="idCategoria" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idconservacao" target-entity="Conservacao" fetch="LAZY">
+      <join-columns>
+        <join-column name="idConservacao" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idprateleira" target-entity="Prateleira" fetch="LAZY">
+      <join-columns>
+        <join-column name="idPrateleira" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idsistemacristalina" target-entity="Sistemacristalino" fetch="LAZY">
+      <join-columns>
+        <join-column name="idSistemaCristalina" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="iddensidade" target-entity="Densidade" fetch="LAZY">
+      <join-columns>
+        <join-column name="idDensidade" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idmedida" target-entity="Medida" fetch="LAZY">
+      <join-columns>
+        <join-column name="idMedida" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

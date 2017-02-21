@@ -1,0 +1,96 @@
+<div class="caption">
+    <h2 class="caption-subject font-dark sbold uppercase titulo"> {{ amostra.nome }}</h2>
+</div>
+<div class="col-md-6 ">
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <table class="table table-striped table-no-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <td>
+                        Classe
+                    </td>
+                    <th class="hidden-xs">
+                        {{ amostra.tipo.dependencia.nome }}>
+                        {{ amostra.tipo.nome }}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Nome da coleção
+                    </td>
+                    <th class="hidden-xs">
+                        <b>{{ amostra.nomeColecao }}</b>
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Estado de concervação
+                    </td>
+                    <th class="hidden-xs">
+                        <b>{{ amostra.estadoConservacao }}</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Dimenção
+                    </td>
+                    <th class="hidden-xs">
+                        <table>
+                            <tr><td>Espeçura: </td><td><b>{{ amostra.dimensao.especura }}</b></td></tr>
+                            <tr><td>Altura: </td><td><b>{{ amostra.dimensao.altura }}</b></td></tr>
+                            <tr><td>Comprimento: </td><td><b>{{ amostra.dimensao.comprimento }}</b></td></tr>
+                            <tr><td>Largura: </td><td><b>{{ amostra.dimensao.largura }}</b></td></tr>
+                        </table>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Prateleira
+                    </td>
+                    <th class="hidden-xs">
+                        <b>{{ amostra.prateleira.nome }}</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Local de extração
+                    </td>
+                    <th class="hidden-xs">
+                        <b>{{ amostra.localespecifico.nome | capitalize }}</b>, Provincia de
+                        <b>{{ amostra.localespecifico.idprovincia.nome | capitalize}}</b> -
+                        <b>{{ amostra.localespecifico.idprovincia.idpais.nome | capitalize}}</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Local de Colheta
+                    </td>
+                    <th class="hidden-xs">
+                        <b>{{ amostra.idlocalcolheita.nome | capitalize }}</b>, Provincia de
+                        <b>{{ amostra.idlocalcolheita.idprovincia.nome | capitalize}}</b> -
+                        <b>{{ amostra.idlocalcolheita.idprovincia.idpais.nome | capitalize}}</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Data
+                    </td>
+                    <th class="hidden-xs">{{ amostra.data }}
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <img src="{{ asset('global/img/acervos/amostra/'~amostra.nome | lower ~'-1.jpg') }}" class="img-thumbnail">
+            <img src="{{ asset('global/img/acervos/amostra/'~amostra.nome | lower ~'-2.jpg') }}" class="img-thumbnail">
+        </div>
+    </div>
+</div>

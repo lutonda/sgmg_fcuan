@@ -1,0 +1,110 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pessoa
+ *
+ * @ORM\Table(name="Pessoa")
+ * @ORM\Entity
+ */
+class Pessoa
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=50, nullable=true)
+     */
+    private $nome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero", type="string", length=50, nullable=true)
+     */
+    private $numero;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="naturalidade", type="integer", nullable=true)
+     */
+    private $naturalidade;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dataNascimento", type="date", nullable=true)
+     */
+    private $datanascimento;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="morada", type="integer", nullable=true)
+     */
+    private $morada;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nivelAcademico", type="integer", nullable=true)
+     */
+    private $nivelacademico;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idEspecialidade", type="integer", nullable=true)
+     */
+    private $idespecialidade;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tipo", type="integer", nullable=true)
+     */
+    private $tipo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="genero", type="integer", nullable=true)
+     */
+    private $genero;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idMunicipio", type="integer", nullable=true)
+     */
+    private $idmunicipio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=false)
+     */
+    private $data = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

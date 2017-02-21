@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MVS\Visita" table="Visita">
+    <indexes>
+      <index name="idParticipante" columns="idParticipante"/>
+    </indexes>
+    <indexes>
+      <index name="guia" columns="guia"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="tipo" type="integer" column="tipo" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="duracao" type="integer" column="duracao" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="estado" type="integer" column="estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="qtdParticipante" type="integer" column="qtdParticipante" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="descricao" type="string" column="descricao" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="data" type="datetime" column="data" nullable="true">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <field name="dataVisita" type="datetime" column="dataVisita" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="exLogica" type="integer" column="exLogica" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="idparticipante" target-entity="AppBundle\Entity\MUS\Pessoa" fetch="LAZY">
+      <join-columns>
+        <join-column name="idParticipante" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="guia" target-entity="AppBundle\Entity\MUS\Pessoa" fetch="LAZY">
+      <join-columns>
+        <join-column name="guia" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,135 @@
+{% block css %}
+    <link href="{{ asset('global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet"
+          type="text/css">
+    <style>
+        #pessoa, #categoria{border-radius: 0 !important; max-width: 100%; min-height: 55px; z-index: 0; z-index: 0 !important;}
+        #categoria input{border:none}
+        #categoria{height: 230px; vertical-align: text-top}
+    </style>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            var d=new Date(1999,10-1,25)
+            var data=d.getTime()
+            $('.date-picker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                minDate: '-1d',
+                maxDate: '+1d'
+            })
+            $('#pessoa').magicSuggest({
+
+                data: [
+                    {% for pessoa in pessoas %}
+                    "{{ pessoa.nome }} - {{ pessoa.contactos.descricao }}",
+                    {% endfor %}
+                ],
+                resultAsString: true,
+                allowFreeEntries: false,
+                maxSelection:1,
+                name: "nomecompleto"
+            });
+
+            $('#categoria').magicSuggest({
+
+                data: [
+                    {% for categoria in categorias %}
+                        {% if(categoria.dependencia is not null) %}
+                            "{{ categoria.nome }} - {{ categoria.dependencia.nome }}",
+                        {% endif %}
+                    {% endfor %}
+                ],
+                resultAsString: true,
+                allowFreeEntries: false,
+                maxSelection:6,
+                name: "categoria"
+            });
+
+        })
+    </script>
+{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-user font-dark"></i>
+                    <span class="caption-subject bold uppercase"> Cadastrar Visitas</span>
+                </div>
+                <div class="actions">
+
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form role="form" class="cadastrarVisita" method="POST" action="javascript:;">
+                    <div class="form-body">
+
+                        <div class="form-group" style="margin:0 15px;  margin-bottom: 30px">
+                            <label class="control-label">Nome Completo</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <div id="pessoa"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Tipo</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-check"></i>
+                                <input type="text" name="tipo" class="form-control input-lg"
+                                       placeholder="Tipo de visita"></div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Duração</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-clock"></i>
+                                <input type="text" name="duracao" class="form-control input-lg"
+                                       placeholder="Duração em minutos"></div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Data</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-calendar-o"></i>
+                                <input type="text" name="data" class="form-control input-lg date-picker"
+                                       placeholder="data"></div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Hora</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-clock-o"></i>
+                                <input type="text" name="hora" class="form-control input-lg"
+                                       placeholder="Hora"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Descrição</label>
+                            <div class="input-icon input-icon-lg">
+                                <i class="fa fa-anchor"></i>
+                                <textarea name="descricao" class="form-control input-lg"
+                                          placeholder="Descrição" rows="9"></textarea></div>
+                        </div>
+                        <div class="form-group col-md-6" style="">
+                            <label class="control-label">Categoria de Interece</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon"></span>
+                                <div id="categoria"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-actions row">
+                            <button type="submit" class="btn blue">Submit</button>
+                            <a href="{{ path('visita_view') }}"><button type="button" class="btn default">Cancel</button></a>
+
+                        </div>
+                    </div>
+                </form>
+                <div class="row"></div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>

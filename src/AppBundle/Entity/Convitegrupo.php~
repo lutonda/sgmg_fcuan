@@ -1,0 +1,53 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Convitegrupo
+ *
+ * @ORM\Table(name="ConviteGrupo", indexes={@ORM\Index(name="idAgenda", columns={"idAgenda"}), @ORM\Index(name="idGrupo", columns={"idGrupo"})})
+ * @ORM\Entity
+ */
+class Convitegrupo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="confirmacao", type="integer", nullable=true)
+     */
+    private $confirmacao;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Agenda
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Agenda")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idAgenda", referencedColumnName="id")
+     * })
+     */
+    private $idagenda;
+
+    /**
+     * @var \AppBundle\Entity\Grupo
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idGrupo", referencedColumnName="id")
+     * })
+     */
+    private $idgrupo;
+
+
+}
+

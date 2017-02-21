@@ -1,0 +1,46 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Paragenesemineiro
+ *
+ * @ORM\Table(name="ParaGeneseMineiro", indexes={@ORM\Index(name="idParaGenese", columns={"idParaGenese"}), @ORM\Index(name="idMineiro", columns={"idMineiro"})})
+ * @ORM\Entity
+ */
+class Paragenesemineiro
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Paragenese
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Paragenese")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idParaGenese", referencedColumnName="id")
+     * })
+     */
+    private $idparagenese;
+
+    /**
+     * @var \AppBundle\Entity\Mineiro
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Mineiro")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idMineiro", referencedColumnName="id")
+     * })
+     */
+    private $idmineiro;
+
+
+}
+

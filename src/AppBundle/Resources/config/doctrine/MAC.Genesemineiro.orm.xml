@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MAC\Genesemineiro" table="GeneseMineiro">
+    <indexes>
+      <index name="idGenese" columns="idGenese"/>
+      <index name="idMineiro" columns="idMineiro"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="idgenese" target-entity="Genese" fetch="LAZY">
+      <join-columns>
+        <join-column name="idGenese" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idmineiro" target-entity="Mineiro" fetch="LAZY">
+      <join-columns>
+        <join-column name="idMineiro" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

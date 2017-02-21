@@ -1,0 +1,92 @@
+{% block css %}
+
+{% endblock %}
+{% block javascripts %}
+
+
+{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase"> prateleira</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <form action="javascript:;" id="form_sample_1" method="post" class="form-horizontal gravar" title="prateleira"
+                      value="form">
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            You have some form errors. Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Your form validation is successful!
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nome
+                                <span class="required" aria-required="true"> </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="id" data-required="1" class="form-control"
+                                       value="{{ prateleira.id }}" hidden="hidden" style="display: none">
+                                <input type="text" name="nome" data-required="1" class="form-control"
+                                       value="{{ prateleira.nome }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Secção
+                                <span class="required" aria-required="true"> </span>
+                            </label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="seccao">
+                                    {% for pra in seccoes %}
+
+                                        <option value="{{ pra.id }}"
+                                                {% if prateleira.nome == pra.nome %}
+                                                    selected="selected"
+                                                {% endif %}
+                                        >{{ pra.nome }}</option>
+
+
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Estado
+                                <span class="required" aria-required="true"> </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="estado" data-required="1" class="form-control"
+                                       value="{{ prateleira.estado }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">Submit</button>
+                                <button type="button" class="btn grey-salsa btn-outline">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>

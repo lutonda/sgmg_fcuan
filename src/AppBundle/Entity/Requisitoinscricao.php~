@@ -1,0 +1,95 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Requisitoinscricao
+ *
+ * @ORM\Table(name="RequisitoInscricao", indexes={@ORM\Index(name="idAgenda", columns={"idAgenda"}), @ORM\Index(name="grupo", columns={"grupo"})})
+ * @ORM\Entity
+ */
+class Requisitoinscricao
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idadeInicial", type="integer", nullable=true)
+     */
+    private $idadeinicial;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idadeFinal", type="integer", nullable=true)
+     */
+    private $idadefinal;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="genero", type="integer", nullable=true)
+     */
+    private $genero;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nacionalidade", type="integer", nullable=true)
+     */
+    private $nacionalidade;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nivelAcademico", type="integer", nullable=true)
+     */
+    private $nivelacademico;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fechado", type="integer", nullable=true)
+     */
+    private $fechado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datalimite", type="date", nullable=true)
+     */
+    private $datalimite;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Agenda
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Agenda")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idAgenda", referencedColumnName="id")
+     * })
+     */
+    private $idagenda;
+
+    /**
+     * @var \AppBundle\Entity\Grupo
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="grupo", referencedColumnName="id")
+     * })
+     */
+    private $grupo;
+
+
+}
+

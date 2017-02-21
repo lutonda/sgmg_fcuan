@@ -1,0 +1,76 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Estrategrafia
+ *
+ * @ORM\Table(name="Estrategrafia", indexes={@ORM\Index(name="idEra", columns={"idEra"}), @ORM\Index(name="idPeriodo", columns={"idPeriodo"}), @ORM\Index(name="idEpoca", columns={"idEpoca"}), @ORM\Index(name="idIdade", columns={"idIdade"}), @ORM\Index(name="idFormacao", columns={"idFormacao"})})
+ * @ORM\Entity
+ */
+class Estrategrafia
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Era
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Era")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idEra", referencedColumnName="id")
+     * })
+     */
+    private $idera;
+
+    /**
+     * @var \AppBundle\Entity\Periodo
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Periodo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idPeriodo", referencedColumnName="id")
+     * })
+     */
+    private $idperiodo;
+
+    /**
+     * @var \AppBundle\Entity\Epoca
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Epoca")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idEpoca", referencedColumnName="id")
+     * })
+     */
+    private $idepoca;
+
+    /**
+     * @var \AppBundle\Entity\Idade
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Idade")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idIdade", referencedColumnName="id")
+     * })
+     */
+    private $ididade;
+
+    /**
+     * @var \AppBundle\Entity\Formacao
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Formacao")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idFormacao", referencedColumnName="id")
+     * })
+     */
+    private $idformacao;
+
+
+}
+

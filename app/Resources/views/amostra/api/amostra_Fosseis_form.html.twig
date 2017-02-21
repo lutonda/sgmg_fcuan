@@ -1,0 +1,515 @@
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('.cadastrarAcervo').submit(function () {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/acervos/new',
+                    data: $(this).serialize(),
+                    success: function (template) {
+                        alert(9);
+                        if (template.status == 1) {
+                            swal({
+                                title: 'Parabens!',
+                                text: "O Mineiro foi criado com sucesso",
+                                type: 'success',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ok, Continuar!',
+                                confirmButtonClass: 'btn btn-success',
+                                buttonsStyling: false
+                            }, function (dismiss) {
+                                // dismiss can be 'cancel', 'overlay',
+                                // 'close', and 'timer'
+                                if (dismiss == true) {
+                                    location.reload();
+                                }
+
+                            })
+                        } else {
+                            swal({
+                                title: 'Lamentamos!',
+                                text: "Ocoreu um Erro ao cadastrar o Acervo, Por favor Tente mais tarde, se persistir contacte o Administrador",
+                                type: 'error',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ok, Continuar!',
+                                confirmButtonClass: 'btn btn-success',
+                                buttonsStyling: false
+                            }, function (dismiss) {
+                                // dismiss can be 'cancel', 'overlay',
+                                // 'close', and 'timer'
+                                if (dismiss == true) {
+                                    location.reload();
+                                }
+
+                            })
+                        }
+
+                    },
+                    error: function (e) {
+                        swal({
+                            title: 'Lamentamos! ' + e.status,
+                            text: "Ocoreu um Erro ao cadastrar o Acervo, Por favor Tente mais tarde, se persistir contacte o Administrador",
+                            type: 'error',
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ok, Continuar!',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        }, function (dismiss) {
+                            // dismiss can be 'cancel', 'overlay',
+                            // 'close', and 'timer'
+                            if (dismiss == true) {
+                                // location.reload();
+                            }
+
+                        })
+                    }
+                });
+
+            });
+            $('#categoria').change(function () {
+                $('div.categoria').addClass('hidden')
+                if ($('#categoria').val() == "13") {
+                    $('.mododejazida').removeClass('hidden');
+                }
+                else if ($('#categoria').val() == "14") {
+                    $('.graumetamorfico').removeClass('hidden');
+                }
+                else if ($('#categoria').val() == "15") {
+                    $('.ambiente').removeClass('hidden');
+                }
+            })
+            $('#localcolheta').magicSuggest({
+                data: [
+                    {% for lc in local %}
+                    "{{ lc.nome }}",
+                    {% endfor %}
+                ],
+                resultAsString: true,
+                allowFreeEntries: false,
+                name: "localcolheta",
+                maxSelection: 1
+            });
+            $('#localespecifico').magicSuggest({
+                data: [
+                    {% for lc in local %}
+                    "{{ lc.nome }}",
+                    {% endfor %}
+                ],
+                resultAsString: true,
+                allowFreeEntries: false,
+                name: "localespecifico",
+                maxSelection: 1
+            });
+        })
+        ;
+    </script>
+{% endblock %}
+
+{% verbatim %}
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+{% endverbatim %}
+{% block javascript %}
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.min.js') }}"></script>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js') }}"></script>
+<!-- The Templates plugin is included to render the upload/download listings -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/tmpl.min.js') }}"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/load-image.all.min.js') }}"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/canvas-to-blob.min.js') }}"></script>
+<!-- blueimp Gallery script -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.blueimp-gallery.min.js') }}"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.iframe-transport.js') }}"></script>
+<!-- The basic File Upload plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload.js') }}"></script>
+<!-- The File Upload processing plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload-process.js') }}"></script>
+<!-- The File Upload image preview & resize plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload-image.js') }}"></script>
+<!-- The File Upload audio preview plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload-audio.js') }}"></script>
+<!-- The File Upload video preview plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload-video.js') }}"></script>
+<!-- The File Upload validation plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload-validate.js') }}"></script>
+<!-- The File Upload user interface plugin -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js') }}"></script>
+<!-- The main application script -->
+    <script src="{{ asset('global/plugins/jquery-file-upload/js/main.js') }}"></script>
+<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
+<!--[if (gte IE 8)&(lt IE 10)]>
+<script src="{{ asset('global/plugins/jquery-file-upload/js/cors/jquery.xdr-transport.js') }}"></script>
+{% endblock %}
+{% block css %}
+    <link href="{{ asset('global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('global/plugins/jquery-file-upload/css/jquery.fileupload.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('global/plugins/file-upload/css/bootstrap.min.css') }}" rel="stylesheet" >
+    <!-- Generic page styles -->
+<link rel="stylesheet" href="{{ asset('global/plugins/file-upload/css/style.css') }}">
+<!-- blueimp Gallery styles -->
+<link rel="stylesheet" href="{{ asset('global/plugins/file-upload/css/blueimp-gallery.min.css') }}">
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="{{ asset('global/plugins/file-upload/css/jquery.fileupload.css') }}">
+<link rel="stylesheet" href="{{ asset('global/plugins/file-upload/css/jquery.fileupload-ui.css') }}">
+<!-- CSS adjustments for browsers with JavaScript disabled -->
+    <noscript>
+        <link rel="stylesheet" href="{{ asset('global/plugins/file-upload/css/jquery.fileupload-noscript.css') }}">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="{{ asset('global/plugins/file-upload/css/jquery.fileupload-ui-noscript.css') }}">
+    </noscript>
+{% endblock %}
+<div class="col-md-12">
+    <div class="portlet box">
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="javascript:;" method="POST" class="cadastrarAcervo" enctype="multipart/form-data"
+                  id="fileupload">
+                <input name="form" value="Fosse" class="hidden"><input name="tipo" value="Salvar" class="hidden">
+                <div class="col-md-6">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label">Nome</label>
+                            <input type="text" name="nome" class="form-control" placeholder="Nome do acervo">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Nome da Colecção</label>
+                            <input type="text" name="nomecoleccao" class="form-control" placeholder="Nome do acervo">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Estado Conservação</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <select name="estadoconcervacao" id="categoria"
+                                        data-pattern-name="elemento-nome[++]" data-pattern-id="elemento-nome_++"
+                                        class="form-control">
+                                    {% for ct in categoria %}
+                                        <option value="{{ ct.id }}">{{ ct.nome }} - {{ ct.dependencia.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label">Categoria</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <select name="categoria" id="categoria"
+                                        data-pattern-name="elemento-nome[++]" data-pattern-id="elemento-nome_++"
+                                        class="form-control">
+                                    {% for ct in categoria %}
+                                        <option value="{{ ct.id }}">{{ ct.nome }} - {{ ct.dependencia.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Prateleira</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <select name="prateleira" id="elemento-nome_0"
+                                        data-pattern-name="elemento-nome[++]" data-pattern-id="elemento-nome_++"
+                                        class="form-control">
+                                    {% for pt in prateleira %}
+                                        <option value="{{ pt.id }}">{{ pt.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Local específico</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                                <div id="localespecifico"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Local colheta</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map-o"></i></span>
+                                <div id="localcolheta"></div>
+                            </div>
+                        </div>
+
+                        <div class="portlet solid grey-silver">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-gift"></i>Medida
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"
+                                              style="width: 25%; text-align: left">Espessura</span>
+                                        <input type="number" class="form-control" name="medidaEspecura">
+                                        <span class="input-group-addon"
+                                              style="width: 25%; text-align: left">Altura</span>
+                                        <input type="number" class="form-control" name="medidaAltura">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"
+                                              style="width: 25%; text-align: left">Comprimento</span>
+                                        <input type="number" class="form-control" name="medidaComprimento">
+                                        <span class="input-group-addon"
+                                              style="width: 25%; text-align: left">Largura</span>
+                                        <input type="number" class="form-control" name="medidaLargura">
+                                    </div>
+                                </div>
+                                <span>x</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-body">
+                        <div class="portlet solid grey-silver">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-gift"></i>Taxonomia
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="col-md-6">
+                                    <label class="control-label">Filo</label>
+                                    <select name="filo" class="form-control">
+                                        {% for fl in filo %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Reino</label>
+                                    <select name="reino" class="form-control">
+                                        {% for fl in reino %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Classe</label>
+                                    <select name="classe" class="form-control">
+                                        {% for fl in classe %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Subclasse</label>
+                                    <select name="subclasse" class="form-control">
+                                        {% for fl in subclasse %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Ordem</label>
+                                    <select name="ordem" class="form-control">
+                                        {% for fl in ordem %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Subordem</label>
+                                    <select name="subordem" class="form-control">
+                                        {% for fl in subordem %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-12">
+                                    <label class="control-label">Família</label>
+                                    <select name="familia" class="form-control">
+                                        {% for fl in familia %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="portlet-form"><span class="grey-silver"><</span></div>
+                        </div>
+                        <div class="portlet solid grey-silver">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-gift"></i>Estrategrafia
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nome</label>
+                                    <input type="text" name="nomeEstrategrafia" class="form-control"
+                                           placeholder="Nome de Estrategrafia">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Descrição</label>
+                                    <textarea name="descricaoEstrategrafia" class="form-control"
+                                              placeholder="Nome de Estrategrafia"></textarea>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="control-label">Era</label>
+                                    <select name="era" class="form-control">
+                                        {% for fl in era %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Periodo</label>
+                                    <select name="periodo" class="form-control">
+                                        {% for fl in periodo %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Epoca</label>
+                                    <select name="epoca" class="form-control">
+                                        {% for fl in epoca %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Idade</label>
+                                    <select name="idade" class="form-control">
+                                        {% for fl in idade %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                                <div class="col-md-12">
+                                    <label class="control-label">Formação</label>
+                                    <select name="formação" class="form-control">
+                                        {% for fl in formacao %}
+                                            <option value="{{ fl.id }}">{{ fl.nome }}</option>
+                                        {% endfor %}
+                                    </select></div>
+                            </div>
+                            <div class="portlet-form"><span class="grey-silver"><</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <div class="row fileupload-buttonbar">
+                        <div class="col-lg-7">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn green fileinput-button">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span> Add files... </span>
+                                                        <input type="file" name="files[]" multiple=""> </span>
+                            <button type="button" class="btn red delete">
+                                <i class="fa fa-trash"></i>
+                                <span> Apagar </span>
+                            </button>
+                            <input type="checkbox" class="toggle">
+                            <!-- The global file processing state -->
+                            <span class="fileupload-process"> </span>
+                        </div>
+                        <!-- The global progress information -->
+                        <div class="col-lg-5 fileupload-progress fade">
+                            <!-- The global progress bar -->
+                            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
+                                 aria-valuemax="100">
+                                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                            </div>
+                            <!-- The extended global progress information -->
+                            <div class="progress-extended"> &nbsp; </div>
+                        </div>
+                    </div>
+                    <!-- The table listing the files available for upload/download -->
+                    <table role="presentation" class="table table-striped clearfix">
+                        <tbody class="files"></tbody>
+                    </table>
+
+                </div>
+                <div class="form-actions col-md-12 right">
+                    <button type="submit" class="btn green">Cadastrar</button>
+                    <button type="button" class="btn default">Cancel</button>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+</div>

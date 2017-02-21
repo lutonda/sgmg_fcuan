@@ -1,0 +1,54 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Medida
+ *
+ * @ORM\Table(name="Medida")
+ * @ORM\Entity
+ */
+class Medida
+{
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="especura", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $especura;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="altura", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $altura;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="comprimento", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $comprimento;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="largura", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $largura;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

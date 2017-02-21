@@ -1,0 +1,96 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Taxonomia
+ *
+ * @ORM\Table(name="Taxonomia", indexes={@ORM\Index(name="idFilo", columns={"idFilo"}), @ORM\Index(name="idReino", columns={"idReino"}), @ORM\Index(name="idClasse", columns={"idClasse"}), @ORM\Index(name="idSubclasse", columns={"idSubclasse"}), @ORM\Index(name="idOrdem", columns={"idOrdem"}), @ORM\Index(name="idSubordem", columns={"idSubordem"}), @ORM\Index(name="idFamilia", columns={"idFamilia"})})
+ * @ORM\Entity
+ */
+class Taxonomia
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Filo
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Filo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idFilo", referencedColumnName="id")
+     * })
+     */
+    private $idfilo;
+
+    /**
+     * @var \AppBundle\Entity\Reino
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Reino")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idReino", referencedColumnName="id")
+     * })
+     */
+    private $idreino;
+
+    /**
+     * @var \AppBundle\Entity\Classe
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Classe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idClasse", referencedColumnName="id")
+     * })
+     */
+    private $idclasse;
+
+    /**
+     * @var \AppBundle\Entity\Subclasse
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Subclasse")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idSubclasse", referencedColumnName="id")
+     * })
+     */
+    private $idsubclasse;
+
+    /**
+     * @var \AppBundle\Entity\Ordem
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ordem")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idOrdem", referencedColumnName="id")
+     * })
+     */
+    private $idordem;
+
+    /**
+     * @var \AppBundle\Entity\Subordem
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Subordem")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idSubordem", referencedColumnName="id")
+     * })
+     */
+    private $idsubordem;
+
+    /**
+     * @var \AppBundle\Entity\Familia
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Familia")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idFamilia", referencedColumnName="id")
+     * })
+     */
+    private $idfamilia;
+
+
+}
+

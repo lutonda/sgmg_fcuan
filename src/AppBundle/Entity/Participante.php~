@@ -1,0 +1,43 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Participante
+ *
+ * @ORM\Table(name="Participante")
+ * @ORM\Entity
+ */
+class Participante
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apelido", type="string", length=50, nullable=true)
+     */
+    private $apelido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=500, nullable=true)
+     */
+    private $descricao;
+
+    /**
+     * @var \AppBundle\Entity\Pessoa
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Pessoa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idPessoa", referencedColumnName="id")
+     * })
+     */
+    private $idpessoa;
+
+
+}
+

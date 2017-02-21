@@ -1,0 +1,60 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Inscricao
+ *
+ * @ORM\Table(name="Inscricao", indexes={@ORM\Index(name="idAgenda", columns={"idAgenda"}), @ORM\Index(name="idParticipante", columns={"idParticipante"})})
+ * @ORM\Entity
+ */
+class Inscricao
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=false)
+     */
+    private $data = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Agenda
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Agenda")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idAgenda", referencedColumnName="id")
+     * })
+     */
+    private $idagenda;
+
+    /**
+     * @var \AppBundle\Entity\Participante
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Participante")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idParticipante", referencedColumnName="idPessoa")
+     * })
+     */
+    private $idparticipante;
+
+
+}
+

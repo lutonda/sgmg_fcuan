@@ -1,0 +1,168 @@
+{% block css %}
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            if (1 =={{ success }}) {
+                swal({
+                    title: 'Parabens!',
+                    text: "As actualizações das Permissões foram feitas com sucesso",
+                    type: 'success',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ok, Continuar!',
+                    confirmButtonClass: 'btn btn-success',
+                    buttonsStyling: false
+                })
+            }
+            $('.activarform').click(function () {
+                if ($(this).attr('title') == 'activar') {
+                    $('form input').prop('disabled', false)
+                    $('.disabled').prop('disabled', true)
+                    $('.form-actions').removeClass('hidden')
+                }
+                else {
+                    $('form input').prop('disabled', true);
+                    $('.form-actions').addClass('hidden')
+                }
+                $('.activarform').removeClass('hidden')
+                $(this).addClass('hidden')
+            })
+        })
+    </script>
+{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-user font-dark"></i>
+                    <span class="caption-subject bold uppercase"> Permissões</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+                        <button type="button" class="btn blue activarform" title="activar">Activar Edição</button>
+                        <button type="button" class="btn red activarform hidden">Cancelar Edição</button>
+
+                    </div>
+                </div>
+            </div>
+            <form action="{{ path('definicoes_config',{'tipo':'ACL'}) }}" method="POST"><input value="ACL" name="ACL"
+                                                                                               class="hidden"
+                                                                                               style="display: none">
+                <div class="portlet-body">
+
+                    <div class="table-scrollable" style="overflow: auto; max-height: 400px">
+
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col" colspan="2"
+                                    class="caption font-red-sunglo caption-subject bold uppercase">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    Descrição
+                                </th>
+                                <th scope="col" class="caption font-red-sunglo caption-subject bold uppercase">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    Administrador
+                                </th>
+                                <th scope="col" class="caption font-red-sunglo caption-subject bold uppercase">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    Gestor
+                                </th>
+                                <th scope="col" class="caption font-red-sunglo caption-subject bold uppercase">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    Funcionario
+                                </th>
+                                <th scope="col" class="caption font-red-sunglo caption-subject bold uppercase">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    Visitante
+                                </th>
+                                <th scope="col" class="caption font-red-sunglo caption-subject bold uppercase">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    Anonymo
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set i=1 %}
+                            {% for dado in dados %}
+                                <tr>
+                                    <td></td>
+                                    <th> {{ dado.descricao }} </th>
+                                    <td>
+                                        <div class="md-checkbox has-success">
+                                            <input type="checkbox" id="admin[{{ i }}]" class="md-check disabled"
+                                                   name="admin[{{ i }}]"
+                                                   {% if dado.admin is not null %}checked{% endif %} disabled/>
+                                            <label for="admin[{{ i }}]">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="md-checkbox has-success">
+                                            <input type="checkbox" id="gestor[{{ i }}]" class="md-check"
+                                                   name="gestor[{{ i }}]" value="1"
+                                                   {% if dado.gestor is not null %}checked{% endif %} disabled/>
+                                            <label for="gestor[{{ i }}]">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="md-checkbox has-success">
+                                            <input type="checkbox" id="funcionario[{{ i }}]" class="md-check"
+                                                   name="funcionario[{{ i }}]" value="1"
+                                                   {% if dado.funcionario is not null %}checked{% endif %} disabled/>
+                                            <label for="funcionario[{{ i }}]">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span></label>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="md-checkbox has-success">
+                                            <input type="checkbox" id="visitante[{{ i }}]" class="md-check"
+                                                   name="visitante[{{ i }}]" value="1"
+                                                   {% if dado.visitante is not null %}checked{% endif %} disabled/>
+                                            <label for="visitante[{{ i }}]">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="md-checkbox has-success">
+                                            <input type="checkbox" id="anonimo[{{ i }}]" class="md-check"
+                                                   name="anonimo[{{ i }}]" value="1"
+                                                   {% if dado.anonimo is not null %}checked{% endif %} disabled/>
+                                            <label for="anonimo[{{ i }}]">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span></label>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                {% set i=i+1 %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="form-actions noborder hidden">
+                        <button type="submit" class="btn blue">Salvar</button>
+                        <button type="button" class="btn default">Cancel</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+</div>

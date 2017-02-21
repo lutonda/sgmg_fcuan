@@ -1,0 +1,138 @@
+<div class="caption">
+    <h2 class="caption-subject font-dark sbold uppercase titulo"> {{ Mineiro.nome }}</h2>
+</div>
+<div class="col-md-6 ">
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <table class="table table-striped table-no-bordered table-advance table-hover">
+                <thead>
+                <tr>
+                    <td>
+                        Classe </td>
+                    <th class="hidden-xs">
+                        {{ Mineiro.getIdcategoria.dependencia.nome }} >
+                        {{ Mineiro.getIdcategoria.nome }}
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Composição </td>
+                    <th class="hidden-xs">
+                        {% for Elemento in Mineiro.composicaoquimico %}
+                            <b>{{ Elemento.nome }} ({{ Elemento.simbolo }})</b><br>
+                        {% endfor %}
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Dureza </td>
+                    <th class="hidden-xs">
+                        Minimo
+                        <b>{{ Mineiro.getIddureza.getMin }}</b>
+                        Maximo <b>{{ Mineiro.getIddureza.getMax }}</b>
+                        </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Cor </td>
+                    <th class="hidden-xs">
+
+                        {% for Cor in Mineiro.cores %}
+                            <label class="label" style="background: {{ Cor.hex }}">-</label><b>{{ Cor.nome }}</b> <br>
+                        {% endfor %}
+
+                         </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Transparencia </td>
+                    <th class="hidden-xs">
+
+                    </th></tr>
+                <tr>
+                    <td>
+                        Brilho </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+                <tr>
+                    <td>
+                        Densidade </td>
+                    <th class="hidden-xs">
+                        {% if Mineiro.iddensidade is not null %}
+                        de <b>{{ Mineiro.iddensidade.getMin }}</b>
+                        á <b>{{ Mineiro.iddensidade.getMax }}</b>
+                        {% endif %}
+                    </th></tr>
+                <tr>
+                    <td>
+                        Clivagem </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+                <tr>
+                    <td>
+                        Fractura </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+
+                <tr>
+                    <td>
+                        Hábito </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+                <tr>
+                    <td>
+                        Sistema cristalino </td>
+                    <th class="hidden-xs">
+                        {% if Mineiro.idsistemacristalina is not null %}
+                        {{ Mineiro.idsistemacristalina.getNome}}
+                        {{ Mineiro.idsistemacristalina.getDescricao}}
+                        {% endif %}
+                    </th></tr>
+                <tr>
+                    <td>
+                        Forma dos Cristais </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+                <tr>
+                    <td>
+                        Ocorencia </td>
+                    <th class="hidden-xs">{{ Mineiro.idocorencia }}
+                    </th></tr>
+                <tr>
+                    <td>
+                        Geneses </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+                <tr>
+                    <td>
+                        Parageneses </td>
+                    <th class="hidden-xs">
+                    </th></tr>
+                <tr>
+                    <td>
+                        caracteristicas Particulares </td>
+                    <th class="hidden-xs">{{ Mineiro.caraceristica }}
+                    </th></tr>
+                <tr>
+                    <td>
+                        Aplicação </td>
+                    <th class="hidden-xs">{{ Mineiro.aplicacao }}
+                    </th></tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+
+    <div class="portlet-body">
+        <div class="table-scrollable">
+    <img src="{{ asset('global/img/acervos/mineiro/'~Mineiro.nome | lower ~'-1.jpg') }}" class="img-thumbnail">
+    <img src="{{ asset('global/img/acervos/mineiro/'~Mineiro.nome | lower ~'-2.jpg') }}" class="img-thumbnail">
+        </div>
+    </div>
+</div>

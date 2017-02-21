@@ -1,0 +1,14 @@
+{% extends 'inicio.html.twig' %}
+
+    {% block javascripts %}
+        <script>
+            $(document).ready(function(e){
+                $('li').removeClass('active open selected');
+                $('.inicio').addClass('active open selected');
+                $('.tree').treegrid();
+            })
+        </script>
+    {% endblock %}
+
+{% block body %}
+{% endblock %}

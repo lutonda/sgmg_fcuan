@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MAC\Fosseis" table="Fosseis">
+    <indexes>
+      <index name="tipo" columns="tipo"/>
+      <index name="dimensao" columns="dimensao"/>
+      <index name="prateleira" columns="prateleira"/>
+      <index name="idTaxonomia" columns="idTaxonomia"/>
+      <index name="idEstategrafia" columns="idEstategrafia"/>
+      <index name="idLocalcolheita" columns="idLocalcolheita"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nome" type="string" column="nome" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nomeColecao" type="string" column="nomeColecao" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="localespecifico" type="string" column="localEspecifico" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="estado" type="integer" column="estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="estadoConservacao" type="integer" column="estadoConservacao" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="data" type="datetime" column="data" nullable="false">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="idtaxonomia" target-entity="Taxonomia" fetch="LAZY">
+      <join-columns>
+        <join-column name="idTaxonomia" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idestategrafia" target-entity="Estrategrafia" fetch="LAZY">
+      <join-columns>
+        <join-column name="idEstategrafia" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="dimensao" target-entity="AppBundle\Entity\MAC\Medida" fetch="LAZY">
+      <join-columns>
+        <join-column name="dimensao" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idlocalcolheita" target-entity="AppBundle\Entity\SYS\Municipio" fetch="LAZY">
+      <join-columns>
+        <join-column name="idLocalcolheita" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="prateleira" target-entity="AppBundle\Entity\MAC\Prateleira" fetch="LAZY">
+      <join-columns>
+        <join-column name="prateleira" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="tipo" target-entity="AppBundle\Entity\MAC\Categoria" fetch="LAZY">
+      <join-columns>
+        <join-column name="tipo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

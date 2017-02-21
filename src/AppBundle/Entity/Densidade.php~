@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Densidade
+ *
+ * @ORM\Table(name="Densidade")
+ * @ORM\Entity
+ */
+class Densidade
+{
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="min", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $min;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="max", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $max;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=500, nullable=true)
+     */
+    private $descricao;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

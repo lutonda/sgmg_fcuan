@@ -1,0 +1,71 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Emprestimo
+ *
+ * @ORM\Table(name="Emprestimo", indexes={@ORM\Index(name="colaborador", columns={"colaborador"})})
+ * @ORM\Entity
+ */
+class Emprestimo
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=500, nullable=true)
+     */
+    private $descricao;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tipo", type="integer", nullable=true)
+     */
+    private $tipo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duracao", type="integer", nullable=true)
+     */
+    private $duracao;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="data", type="integer", nullable=true)
+     */
+    private $data;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Colaborador
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Colaborador")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="colaborador", referencedColumnName="id")
+     * })
+     */
+    private $colaborador;
+
+
+}
+

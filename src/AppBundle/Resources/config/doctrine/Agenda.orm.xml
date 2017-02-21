@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MEV\Agenda" table="Agenda">
+    <indexes>
+      <index name="idEvento" columns="idEvento"/>
+      <index name="orador" columns="orador"/>
+      <index name="idLocal" columns="idLocal"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="categoria" type="integer" column="categoria" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="hora" type="integer" column="hora" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="estado" type="integer" column="estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="data" type="datetime" column="data" nullable="false">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="idevento" target-entity="AppBundle\Entity\MEV\Evento" fetch="LAZY">
+      <join-columns>
+        <join-column name="idEvento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="orador" target-entity="AppBundle\Entity\MUS\Pessoa" fetch="LAZY">
+      <join-columns>
+        <join-column name="orador" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idlocal" target-entity="AppBundle\Entity\MEV\Local" fetch="LAZY">
+      <join-columns>
+        <join-column name="idLocal" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

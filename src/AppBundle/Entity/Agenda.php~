@@ -1,0 +1,84 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Agenda
+ *
+ * @ORM\Table(name="Agenda", indexes={@ORM\Index(name="idEvento", columns={"idEvento"}), @ORM\Index(name="orador", columns={"orador"}), @ORM\Index(name="idLocal", columns={"idLocal"})})
+ * @ORM\Entity
+ */
+class Agenda
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="categoria", type="integer", nullable=true)
+     */
+    private $categoria;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="hora", type="integer", nullable=true)
+     */
+    private $hora;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=false)
+     */
+    private $data = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Evento
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Evento")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idEvento", referencedColumnName="id")
+     * })
+     */
+    private $idevento;
+
+    /**
+     * @var \AppBundle\Entity\Pessoa
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pessoa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="orador", referencedColumnName="id")
+     * })
+     */
+    private $orador;
+
+    /**
+     * @var \AppBundle\Entity\Local
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Local")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idLocal", referencedColumnName="id")
+     * })
+     */
+    private $idlocal;
+
+
+}
+

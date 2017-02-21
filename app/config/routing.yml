@@ -1,0 +1,9 @@
+soap:
+    resource: "@SoapBundle/Resources/config/routing.yml"
+    prefix:   /api
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+login_check:
+    path: /login_check

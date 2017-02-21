@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\MAC\Estrategrafia" table="Estrategrafia">
+    <indexes>
+      <index name="idEra" columns="idEra"/>
+      <index name="idPeriodo" columns="idPeriodo"/>
+      <index name="idEpoca" columns="idEpoca"/>
+      <index name="idIdade" columns="idIdade"/>
+      <index name="idFormacao" columns="idFormacao"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="idera" target-entity="Era" fetch="LAZY">
+      <join-columns>
+        <join-column name="idEra" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idperiodo" target-entity="Periodo" fetch="LAZY">
+      <join-columns>
+        <join-column name="idPeriodo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idepoca" target-entity="Epoca" fetch="LAZY">
+      <join-columns>
+        <join-column name="idEpoca" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="ididade" target-entity="Idade" fetch="LAZY">
+      <join-columns>
+        <join-column name="idIdade" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idformacao" target-entity="Formacao" fetch="LAZY">
+      <join-columns>
+        <join-column name="idFormacao" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
