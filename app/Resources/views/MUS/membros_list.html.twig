@@ -24,11 +24,12 @@
 
             $('.eliminar').click(function(e){
                 var nome = $(this).attr('d')
+                var data = $(this).attr('value')
                 $.ajax({
                     type:'POST',
                     dataType: 'Json',
                     url: '{{ path('membro_delete') }}',
-                    data: {'data':$(this).attr('value')},
+                    data: {'data':data},
                     success: function(e){
                         if(e.status==1)
                         {
@@ -43,6 +44,7 @@
                                 buttonsStyling: false
                             }, function (dismiss) {
                                 location.reload()
+                                // $('.tr_'+data).remove();
                             })
                         }
 
@@ -193,10 +195,10 @@
                     {% set i=0 %}
                     {% for membro in dados %}
                     {% set i=i+1 %}
-                    <tr class="gradeX odd_{{ membro.id }}" role="row">
+                    <tr class="gradeX odd tr_{{ membro.id }}" role="row">
                         <td class="sorting_1"> {{ i }} </td>
                         <td>
-                            {{ membro.nome }}
+                            {{ membro.nome }}{{ membro.id }}
                         </td>
                         <td>
                             {{ membro.tipo }}

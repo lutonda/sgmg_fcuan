@@ -28,12 +28,12 @@
                     cadastrarVisita("GET", {nome:$(this).attr('title')})
                 });
                 $('.eliminar').click(function(){
-
+                    var data=$(this).attr('value');
                     $.ajax({
                         type:'POST',
                         dataType: 'Json',
                         url: '{{ path('visita_delete') }}',
-                        data: {'data':$(this).attr('value')},
+                        data: {'data':data},
                         success: function(e){
                             if(e.status==1)
                             {
@@ -47,7 +47,7 @@
                                     confirmButtonClass: 'btn btn-success',
                                     buttonsStyling: false
                                 }, function (dismiss) {
-                                    location.reload()
+                                    $('.tr_'+data).remove();
                                 })
                             }
 

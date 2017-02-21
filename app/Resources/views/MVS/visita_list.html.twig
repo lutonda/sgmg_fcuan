@@ -121,7 +121,7 @@
                     {% set i=0 %}
                     {% for membro in dados %}
                     {% set i=i+1 %}
-                    <tr class="gradeX odd" role="row">
+                    <tr class="gradeX odd tr_{{ membro.id }}" role="row">
                         <td class="sorting_1"> {{ i }} </td>
                         <td>
                             {{ membro.Idparticipante.nome }}

@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\MUS\Curso;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Domain\SYS;
+use AppBundle\Domain\SYS\security;
 
 class PessoaRepositorio
 {
@@ -67,7 +68,8 @@ class PessoaRepositorio
         $cr = new EspecialidadeRepositorio($this->em);
         $mr = new MunicipioRepositorio($this->em);
         $ct = new ContactosRepositorio($this->em);
-        $pessoa->setId(base64_encode($pessoa->getId()));
+        $ec = new security\encry();
+        $pessoa->setId($ec->close($pessoa->getId()));
         $pessoa->setIdmunicipio($mr->mostrarUm($pessoa->getIdmunicipio()));
         $pessoa->setIdespecialidade($cr->mostrarUm($pessoa->getIdespecialidade()));
         $pessoa->setNaturalidade($mr->mostrarUm($pessoa->getNaturalidade()));
